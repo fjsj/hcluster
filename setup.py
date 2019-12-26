@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 from setuptools import setup, Extension
-import numpy
 
 try:
     from Cython.Build import cythonize
@@ -9,18 +8,26 @@ except ImportError:
     use_cython = False
 
 
+class get_numpy_include(object):
+    """Returns Numpy's include path with lazy import.
+    """
+    def __str__(self):
+        import numpy
+        return numpy.get_include()
+
+
 ext_modules = [Extension('hcluster._distance_wrap',
                          ['hcluster/distance_wrap.c'],
-                         include_dirs=[numpy.get_include()])]
+                         include_dirs=[get_numpy_include()])]
 
 if use_cython:
     ext_modules += cythonize([Extension('hcluster._hierarchy',
                                         ['hcluster/_hierarchy.pyx'],
-                                        include_dirs=[numpy.get_include()])])
+                                        include_dirs=[get_numpy_include()])])
 else:
     ext_modules += [Extension('hcluster._hierarchy',
                               ['hcluster/_hierarchy.c'],
-                              include_dirs=[numpy.get_include()])]
+                              include_dirs=[get_numpy_include()])]
 
 setup(maintainer="Forest Gregg",
       version="0.3.6",
