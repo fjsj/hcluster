@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from setuptools import setup, Extension
+
 import numpy
 
 try:
@@ -33,7 +34,8 @@ setup(maintainer="Forest Gregg",
       install_requires=['future',
                         "numpy>=1.10.4 ;python_version<'3.6'",
                         "numpy>=1.12.1 ;python_version=='3.6'",
-	                "numpy>=1.15.0; python_version=='3.7'"],
+	                      "numpy>=1.15.0; python_version=='3.7'",
+                        "numpy>=1.15.0; python_version>'3.7'"],
       ext_modules=ext_modules,
       long_description="""
 This library provides Python functions for hierarchical clustering. Its features
